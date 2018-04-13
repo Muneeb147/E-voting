@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "245931304215",
+    "firebase_url": "https://e-vote-app.firebaseio.com",
+    "project_id": "e-vote-app",
+    "storage_bucket": "e-vote-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245931304215:android:fc83f82a2ea2044a",
+        "android_client_info": {
+          "package_name": "com.example.zia.logindemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245931304215-1lf74u8a8ef46hddcvdrei0f2k0p0imf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNBA5FqjwX5x_k2OHVSq7seAQ0Upb9ohw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

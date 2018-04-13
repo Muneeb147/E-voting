@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">E-voting</string>
+    <string-array name="schools">
+        <item>SBASSE</item>
+        <item>SDSB</item>
+        <item>MGSHSS</item>
+        <item>SAHSOL</item>
+    </string-array>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+</resources>
