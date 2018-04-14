@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
@@ -41,19 +42,19 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 //
-//        editTextEmail = (EditText) findViewById(R.id.em);
-//        editTextPassword = (EditText) findViewById(R.id.pass);
-//        buttonSignIn = (Button) findViewById(R.id.loginbutton);
-//        progressDialog = new ProgressDialog(this);
-//
-//        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                loginuser();
-//            }
-//        });
+        editTextEmail = (EditText) findViewById(R.id.email);
+        editTextPassword = (EditText) findViewById(R.id.password);
+        buttonSignIn = (Button) findViewById(R.id.login);
+        progressDialog = new ProgressDialog(this);
+
+        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginuser();
+            }
+        });
         password = (EditText)findViewById(R.id.password);
         show = (TextView)findViewById(R.id.show);
 
@@ -102,38 +103,37 @@ public class Login extends AppCompatActivity {
         });
     }
 
-//    private void loginuser(){
-//
-//        String email = editTextEmail.getText().toString().trim();
-//        String password  = editTextPassword.getText().toString().trim();
-//        if(TextUtils.isEmpty(email)){
-//            Toast.makeText(this,"Please enter email", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//
-//        if(TextUtils.isEmpty(password)){
-//            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//
-//        progressDialog.setMessage("Signing In Please Wait...");
-//        progressDialog.show();
-//
-//        firebaseAuth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        progressDialog.dismiss();
-//                        //if the task is successfull
-//                        if(task.isSuccessful()){
-//                            //start the profile activity
-//                            finish();
-//                           startActivity(new Intent(getApplicationContext(), Profile.class));
-//                        }else{
-//                            Toast.makeText(getApplicationContext(),"Please enter Valid credentials",Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
-//
-//    }
+    private void loginuser(){
+
+        String email = editTextEmail.getText().toString().trim();
+        String password  = editTextPassword.getText().toString().trim();
+        if(TextUtils.isEmpty(email)){
+            Toast.makeText(this,"Please enter email", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        progressDialog.setMessage("Signing In Please Wait...");
+        progressDialog.show();
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
+                        //if the task is successfull
+                        if(task.isSuccessful()){
+                            //start the profile activity
+                            finish();
+                           startActivity(new Intent(getApplicationContext(), Profile.class));
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Please enter Valid credentials",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
 }

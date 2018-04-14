@@ -19,6 +19,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.telephony.gsm.SmsManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -36,11 +37,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static android.text.TextUtils.isEmpty;
+
 public class register_backup extends AppCompatActivity {
 
     Session session = null;
     private EditText Name;
-    private EditText Password;
     private EditText Email;
     private RadioButton Utype1,Utype2;
     private RadioButton radioButton6,radioButton7;
@@ -51,7 +53,6 @@ public class register_backup extends AppCompatActivity {
     private TextView Info;
     private Button Register;
     private Button Login;
-    private int counter=3;
     private ProgressDialog pd;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -66,7 +67,7 @@ public class register_backup extends AppCompatActivity {
         if(radioButton6.isChecked()){
 
             usertype = radioButton6.getText().toString();
-        } else{
+        } else if (radioButton7.isChecked()){
             usertype = radioButton7.getText().toString();
 
         }
@@ -74,10 +75,10 @@ public class register_backup extends AppCompatActivity {
 
 
 
-//    if(TextUtils.isEmpty(pass1)){
-//        Toast.makeText(this,"Please enter your password",Toast.LENGTH_SHORT).show();
-//        return;
-//    }
+    if((TextUtils.isEmpty(name)) || (TextUtils.isEmpty(email)) || (TextUtils.isEmpty(usertype))){
+        Toast.makeText(this,"Enter all details",Toast.LENGTH_SHORT).show();
+        return;
+    }
         pd.setMessage("Registering User");
         pd.show();
         final  String pass = "press@"+ email.split("@")[0];
@@ -115,9 +116,15 @@ public class register_backup extends AppCompatActivity {
 
                     String id1 = firebaseAuth.getCurrentUser().getUid();
                     databaseReference = FirebaseDatabase.getInstance().getReference();
-                    Userinfo uifo = new Userinfo(name,email,finalUsertype, school,gender);
+                    if(finalUsertype.equals("Candidate")){
 
-                    databaseReference.child("users").child(id1).setValue(uifo);
+                        Candidate can = new Candidate(name,email,finalUsertype, school,gender,"",0,"");
+                        databaseReference.child("users").child(id1).setValue(can);
+                    } else{
+                        Voter voter = new Voter(name,email,finalUsertype, school,gender,true);
+                        databaseReference.child("users").child(id1).setValue(voter);
+
+                    }
                     pd.dismiss();
                     Toast.makeText(register_backup.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(register_backup.this, Login.class);
@@ -128,12 +135,8 @@ public class register_backup extends AppCompatActivity {
                     pd.dismiss();
                     Toast.makeText(register_backup.this," Not Registered Successfully",Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
-
-
     }
 
     @Override
@@ -166,7 +169,7 @@ public class register_backup extends AppCompatActivity {
         s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 school = adapterView.getSelectedItem().toString();
 
 
@@ -181,7 +184,7 @@ public class register_backup extends AppCompatActivity {
         s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                 gender = adapterView.getSelectedItem().toString();
             }
 

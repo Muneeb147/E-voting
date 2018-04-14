@@ -9,26 +9,29 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
-    String url = "https://pixabay.com/static/img/no_hotlinking.png";
-
     //view objects
     private TextView textViewUserEmail;
     private Button buttonLogout;
   private CircleImageView circularimage;
+  private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         firebaseAuth = FirebaseAuth.getInstance();
         circularimage = (CircleImageView)(findViewById(R.id.profile_image));
-        Picasso.with(this).load(url).into(circularimage);
-
+        final String uid;
         //if the user is not logged in
         //that means current user will return null
         if(firebaseAuth.getCurrentUser() == null){
@@ -40,14 +43,28 @@ public class Profile extends AppCompatActivity {
 
         //getting current user
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        uid = user.getUid();
 
+        databaseReference= FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String username = dataSnapshot.child("users").child(uid).child("name").getValue(String.class);
+                textViewUserEmail.setText("Welcome "+username);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         //initializing views
         textViewUserEmail = (TextView) findViewById(R.id.textViewUserEmail);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
         //displaying logged in user name
 
-        textViewUserEmail.setText("Welcome "+user.getEmail());
 
         //adding listener to button
         buttonLogout.setOnClickListener(new View.OnClickListener() {
