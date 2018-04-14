@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile extends AppCompatActivity {
+    //HAHAHAHAHAHAHAHAHAHAHAH
     private FirebaseAuth firebaseAuth;
     //view objects
     private TextView textViewUserEmail;
