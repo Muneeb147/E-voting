@@ -128,7 +128,7 @@ public class Login extends AppCompatActivity {
                         if(task.isSuccessful()){
                             //start the profile activity
                             finish();
-                           startActivity(new Intent(getApplicationContext(), Profile.class));
+                           startActivity(new Intent(getApplicationContext(), homepage.class));
                         }else{
                             Toast.makeText(getApplicationContext(),"Please enter Valid credentials",Toast.LENGTH_LONG).show();
                         }

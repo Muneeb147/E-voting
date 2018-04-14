@@ -1,13 +1,26 @@
 <resources>
     <string name="app_name">E-voting</string>
+    <string name="logout">Logout</string>
+    <string name="home">Home</string>
     <string-array name="schools">
+        <item>No Selected</item>
         <item>SBASSE</item>
         <item>SDSB</item>
         <item>MGSHSS</item>
         <item>SAHSOL</item>
     </string-array>
     <string-array name="gender">
+        <item>No Selected</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string-array name="position">
+        <item>No Selected</item>
+        <item>President</item>
+        <item>Vice President</item>
+        <item>General Secretary</item>
+        <item>Member</item>
+    </string-array>
+
 </resources>
