@@ -11,6 +11,7 @@ public class Voter {
     public String school;
     public String gender;
     public boolean canvote;
+    public  boolean isadmin;
 
     public Voter(String name,String em,String usert, String sc, String g,boolean cv){
         this.email = em;
@@ -19,5 +20,6 @@ public class Voter {
         this.school = sc;
         this.gender = g;
         this.canvote= cv;
+        this.isadmin = false;
     }
 }

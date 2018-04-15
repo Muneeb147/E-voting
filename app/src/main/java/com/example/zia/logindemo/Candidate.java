@@ -13,6 +13,7 @@ public class Candidate {
     public int votecount;
     public String agenda;
     public String position;
+    public boolean isadmin;
 
     public Candidate(String name,String em,String usert, String sc, String g,String ag, int v, String p){
         this.email = em;
@@ -23,5 +24,6 @@ public class Candidate {
         this.votecount = v;
         this.agenda = ag;
         this.position= p;
+        this.isadmin = false;
     }
 }

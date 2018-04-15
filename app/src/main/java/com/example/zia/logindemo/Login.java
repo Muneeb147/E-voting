@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
@@ -28,12 +34,13 @@ public class Login extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignup;
-
     private EditText password;
     private TextView show;
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
 
     //progress dialog
     private ProgressDialog progressDialog;
@@ -66,7 +73,6 @@ public class Login extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(password.getText().length()> 0){
@@ -107,33 +113,88 @@ public class Login extends AppCompatActivity {
 
         String email = editTextEmail.getText().toString().trim();
         String password  = editTextPassword.getText().toString().trim();
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email", Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
             return;
         }
 
-        progressDialog.setMessage("Signing In Please Wait...");
-        progressDialog.show();
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        //if the task is successfull
-                        if(task.isSuccessful()){
-                            //start the profile activity
-                            finish();
-                           startActivity(new Intent(getApplicationContext(), homepage.class));
-                        }else{
-                            Toast.makeText(getApplicationContext(),"Please enter Valid credentials",Toast.LENGTH_LONG).show();
+        if(email.toLowerCase().equals("admin")){
+
+            email = "muneebzia09@gmail.com";
+            password = "admin123";
+            progressDialog.setMessage("Signing In As Admin...");
+            progressDialog.show();
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            //if the task is successfull
+                            if(task.isSuccessful()){
+                                //start the profile activity
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), Adminprof.class));
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Please enter Valid credentials",Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }
-                });
+                    });
+
+        }
+        else {
+
+            progressDialog.setMessage("Signing In Please Wait...");
+            progressDialog.show();
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            //if the task is successfull
+                            if (task.isSuccessful()) {
+                                //start the profile activity
+
+
+                                firebaseUser = firebaseAuth.getCurrentUser();
+                                final String uid = firebaseUser.getUid();
+
+                                databaseReference= FirebaseDatabase.getInstance().getReference();
+                                databaseReference.addValueEventListener(new ValueEventListener(){
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        String usertype = dataSnapshot.child("users").child(uid).child("usertype").getValue(String.class);
+                                        if(usertype.toLowerCase().equals("voter")){
+                                            Log.d("vot","yehan aya");
+                                            finish();
+                                            startActivity(new Intent(getApplicationContext(), homepage.class));
+                                        } else if(usertype.toLowerCase().equals("candidate")){
+                                            Log.d("can","yehan aya");
+                                            finish();
+                                            startActivity(new Intent(getApplicationContext(), candidate_profile.class));
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Please enter Valid credentials", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
+        }
 
     }
 }

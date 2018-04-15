@@ -20,9 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login" />
-        <activity android:name=".Profile" />
         <activity android:name=".register_backup" />
-        <activity android:name=".homepage"></activity>
+        <activity android:name=".homepage" />
+        <activity android:name=".Adminprof" />
+        <activity android:name=".candidate_profile"></activity>
     </application>
 
 </manifest>
