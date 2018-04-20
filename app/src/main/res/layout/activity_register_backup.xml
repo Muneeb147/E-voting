@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/name"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_alignLeft="@+id/email"
         android:layout_alignStart="@+id/email"
@@ -108,7 +108,7 @@
 
     <EditText
         android:id="@+id/email"
-        android:layout_width="280dp"
+        android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_alignLeft="@+id/Upperimage"
         android:layout_alignStart="@+id/Upperimage"

@@ -2,6 +2,7 @@ package com.example.zia.logindemo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +51,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance();
+        EditText et2 = (EditText) findViewById(R.id.email);
+        EditText et3 = (EditText) findViewById(R.id.password);
+
+        et2.setHintTextColor(Color.WHITE);
+        et3.setHintTextColor(Color.WHITE);
 //
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);

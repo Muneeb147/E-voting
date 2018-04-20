@@ -1,5 +1,6 @@
 package com.example.zia.logindemo;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -152,6 +153,12 @@ public class register_backup extends AppCompatActivity {
         s1 = findViewById(R.id.dropdown2);
         radioButton6 = (RadioButton)findViewById(R.id.radioButton8);
         radioButton7 = (RadioButton)findViewById(R.id.radioButton10);
+
+        EditText et2 = (EditText) findViewById(R.id.name);
+        EditText et3 = (EditText) findViewById(R.id.email);
+
+        et2.setHintTextColor(Color.WHITE);
+        et3.setHintTextColor(Color.WHITE);
 
         //Info.setText("Already Have an Account?");
         Register.setOnClickListener(new View.OnClickListener() {

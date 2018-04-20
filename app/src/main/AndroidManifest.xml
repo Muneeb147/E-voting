@@ -23,7 +23,8 @@
         <activity android:name=".register_backup" />
         <activity android:name=".homepage" />
         <activity android:name=".Adminprof" />
-        <activity android:name=".candidate_profile"></activity>
+        <activity android:name=".candidate_profile" />
+        <activity android:name=".update_candidate_profile"></activity>
     </application>
 
 </manifest>
