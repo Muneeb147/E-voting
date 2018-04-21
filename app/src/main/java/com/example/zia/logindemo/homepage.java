@@ -18,6 +18,7 @@ public class homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -35,9 +36,10 @@ public class homepage extends AppCompatActivity {
         else if (item.getItemId() == R.id.logout){
             firebaseAuth.signOut();
             //closing activity
-            finish();
-            //starting login activity
             startActivity(new Intent(getApplicationContext(), Login.class));
+            //finish();
+            //starting login activity
+
         }
         else{
             return super.onOptionsItemSelected(item);

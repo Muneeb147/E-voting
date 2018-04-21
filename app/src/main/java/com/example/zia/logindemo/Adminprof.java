@@ -9,16 +9,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Adminprof extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
+    TextView result,create_elec,edit_cand;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         firebaseAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adminprof);
+        result = (TextView) findViewById(R.id.results);
+        edit_cand = (TextView) findViewById(R.id.candidate);
+        create_elec = (TextView) findViewById(R.id.create);
+
+        edit_cand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Adminprof.this, deletecandidate.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,21 +52,11 @@ public class Adminprof extends AppCompatActivity {
             //starting login activity
             startActivity(new Intent(getApplicationContext(), Login.class));
         }
-        else{
+        else {
             return super.onOptionsItemSelected(item);
         }
         return true;
     }
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-    }
+}
 
