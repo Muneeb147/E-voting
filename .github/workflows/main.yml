@@ -5,7 +5,7 @@ jobs:
     steps:
       - name: Extract PR number
         id: extract_pr_number
-        run: echo "::set-output name=pr_number::$(echo ${{ github.event.comment.html_url }} | awk -F'/' '{print $(NF-1)}')"
+        run: echo "::set-output name=pr_number::$(echo ${{ github.event.comment.html_url }} | awk -F'#' '{print $(NF-1)}' | awk -F'/' '{print $(NF-0)}')"
 
       - id: checkout
         uses: actions/checkout@v3
