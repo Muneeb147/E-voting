@@ -1,23 +1,18 @@
 jobs:
-  checkout_pull_request:
-    runs-on: ubuntu-latest
-    if: startsWith(github.event.comment.body, 'run tests')
-    steps:
-      - name: Extract PR number
-        id: extract_pr_number
-        run: echo "::set-output name=pr_number::$(echo ${{ github.event.comment.html_url }} | awk -F'#' '{print $(NF-1)}' | awk -F'/' '{print $(NF-0)}')"
-
-      - id: checkout
-        uses: actions/checkout@v3
-        with:
-          ref: "refs/pull/${{ steps.extract_pr_number.outputs.pr_number }}/head"
-
   backend:
-    needs: checkout_pull_request
     if: startsWith(github.event.comment.body, 'run tests')
     runs-on: ubuntu-latest
     steps:
-    - name: Test Step
+
+    - id: extract_pr_number
+      run: echo "::set-output name=pr_number::$(echo ${{ github.event.comment.html_url }} | awk -F'#' '{print $(NF-1)}' | awk -F'/' '{print $(NF-0)}')"
+
+    - id: checkout
+      uses: actions/checkout@v3
+      with:
+        ref: "refs/pull/${{ steps.extract_pr_number.outputs.pr_number }}/head"
+
+    - id: echoStep
       run: |
             echo "Inside group"
             echo $(pwd)
