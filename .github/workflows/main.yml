@@ -19,7 +19,7 @@ jobs:
     steps:
     - name: Test Step
       run: |
-            echo Inside group"
+            echo "Inside group"
             echo $(pwd)
 
 
